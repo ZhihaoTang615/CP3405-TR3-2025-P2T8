@@ -1,0 +1,16 @@
+* [33m61ed97d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m chore: add .gitignore and untrack .venv
+* [33m6453e31[m Data role: baseline model + API + tests + CI
+* [33mb7e2882[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Rebuild baseline structure and code
+* [33mb68db26[m Rebuild from scratch: baseline code, tests, CI, data, notebooks (executed)
+* [33mb7313d6[m Rebuild from scratch: baseline code, tests, CI, data, notebooks (executed)
+* [33m4846332[m Fix CI: add PYTHONPATH and install steps
+* [33md5c979b[m Normalize notebooks folder; move pytest.ini to root; add executed baseline notebook
+* [33mf2fd44d[m Make src a package; add pytest.ini; finalize baseline + tests for CI
+* [33m64b1789[m Fix test file location: remove tests/.github and add correct test_baseline.py
+* [33ma33e9ea[m Move CI workflow to correct folder
+* [33m5ce8cba[m Add Data/ML baseline, sample data, and CI
+* [33m40d8188[m Update README.md
+* [33mc750c35[m Create ci.yml
+* [33m7f71fea[m Create workflows
+* [33m98323d6[m Create ci testing
+* [33ma16147e[m README.md
