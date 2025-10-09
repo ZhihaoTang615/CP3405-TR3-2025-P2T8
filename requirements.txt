@@ -1,2 +1,7 @@
 pandas
 pytest
+jupyter
+nbconvert
+nbformat
+nbclient
+ipykernel

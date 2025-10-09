@@ -1,39 +1,41 @@
 import pandas as pd
-from typing import Optional
 
-def load_seats(csv_path: str) -> pd.DataFrame:
-    df = pd.read_csv(csv_path)
-    required = {"seat_id","is_near_power","is_window","occupied"}
-    missing = required - set(df.columns)
-    if missing:
-        raise ValueError(f"Missing required columns: {missing}")
+NEAR_POWER_WEIGHT = 2
+WINDOW_WEIGHT = 1
+
+def load_seats(path: str) -> pd.DataFrame:
+    return pd.read_csv(path)
+
+def _ensure_columns(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    if "is_occupied" not in df.columns:
+        df["is_occupied"] = 0
+    for col in ["is_near_power", "is_window", "is_occupied"]:
+        if col not in df.columns:
+            df[col] = 0
+        # 统一成 0/1
+        df[col] = (
+            df[col]
+            .astype(str)
+            .str.strip()
+            .str.lower()
+            .replace({"true": "1", "false": "0"})
+            .astype(float)
+            .astype(int)
+        )
     return df
 
 def score_rows(df: pd.DataFrame) -> pd.DataFrame:
-    available = df[df["occupied"] == 0].copy()
-    available["is_near_power"] = available["is_near_power"].astype(int)
-    available["is_window"] = available["is_window"].astype(int)
-    available["score"] = 2*available["is_near_power"] + 1*available["is_window"]
-    return available
+    df = _ensure_columns(df)
+    df["score"] = (NEAR_POWER_WEIGHT * df["is_near_power"] + WINDOW_WEIGHT * df["is_window"]) * (1 - df["is_occupied"])
+    return df
 
-def recommend_seat(csv_path: str) -> Optional[int]:
-    df = load_seats(csv_path)
+def recommend_seat(path: str) -> int:
+    df = load_seats(path)
     scored = score_rows(df)
-    if scored.empty:
-        return None
-    best = scored.sort_values(
-        ["score","is_near_power","is_window","seat_id"],
-        ascending=[False,False,False,True]
-    ).head(1)
-    return int(best["seat_id"].values[0])
-
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="Rule-based seat recommendation baseline")
-    parser.add_argument("--csv", required=True, help="Path to seats CSV")
-    args = parser.parse_args()
-    rec = recommend_seat(args.csv)
-    if rec is None:
-        print("No available seats.")
-    else:
-        print(f"Baseline recommended seat: {rec}")
+    ranked = scored.sort_values(
+        ["score", "is_near_power", "is_window", "seat_id"],
+        ascending=[False, False, False, True],
+        kind="mergesort",
+    )
+    return int(ranked.iloc[0]["seat_id"])
