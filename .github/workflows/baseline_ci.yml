@@ -1,16 +1,12 @@
 name: Baseline CI
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,8 +18,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
-        env:
-          PYTHONPATH: ${{ github.workspace }}
+      - name: Add src to PYTHONPATH
         run: |
+          echo "PYTHONPATH before: $PYTHONPATH"
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          echo "PYTHONPATH after: $PYTHONPATH"
+
+      - name: Run tests
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           pytest -q
