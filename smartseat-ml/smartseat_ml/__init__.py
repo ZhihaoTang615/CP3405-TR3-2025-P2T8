@@ -1,1 +1,2 @@
+# SmartSeat ML package
 
