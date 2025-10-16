@@ -1,15 +1,4 @@
 pytest
-numpy
-pandas
-scikit-learn
-# SmartSeat – ML Baselines
-
-This repo contains:
-- A rule-based baseline (`smartseat_ml/baseline.py`)
-- An open-source occupancy model adaptation (`smartseat_ml/open_source_model.py`)
-- Minimal dataset: `external/Occupancy_model/datatraining.txt`
-
-## Run locally
-
-CI runs on GitHub Actions and prints metrics from tests.
-
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
