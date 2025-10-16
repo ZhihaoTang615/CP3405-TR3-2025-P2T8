@@ -35,3 +35,4 @@ def train_and_eval_open_source() -> dict:
         "precision": float(precision_score(yte, yhat, zero_division=0)),
         "recall": float(recall_score(yte, yhat, zero_division=0)),
     }
+print(train_and_eval_open_source())
