@@ -36,3 +36,12 @@ def train_and_eval_open_source() -> dict:
         "recall": float(recall_score(yte, yhat, zero_division=0)),
     }
 print(train_and_eval_open_source())
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+
+def test_open_source_model():
+    from smartseat_ml.open_source_model import train_and_eval_open_source
+    m = train_and_eval_open_source()
+    # ✅ 这行是关键：CI 日志会显示
+    print("Open-source model metrics:", m)
+    assert "accuracy" in m and 0.0 <= m["accuracy"] <= 1.0
