@@ -1,0 +1,139 @@
+/* ===== Tailwind 基础（保持在最上面） ===== */
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 主题基础样式 ===== */
+html,
+body,
+#root {
+  min-height: 100%;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  transition: background 0.4s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+/* ===== 默认深色主题 ===== */
+:root {
+  --bg: radial-gradient(circle at 50% 10%, #050b17 0%, #0b1220 100%);
+  --panel: rgba(20, 28, 48, 0.65);
+  --border: rgba(255, 255, 255, 0.08);
+
+  /* 🌙 Dark Mode 字体 = 最亮白 */
+  --text: #ffffff;
+  --muted: #d1d5db;
+
+  --brand-1: #1d4ed8;
+  --brand-2: #0ea5e9;
+  --accent: #6366f1;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --glass-blur: saturate(180%) blur(14px);
+}
+
+html.light {
+  --bg: #ffffff;
+  --panel: rgba(255, 255, 255, 0.88);
+  --border: rgba(0, 0, 0, 0.1);
+
+  /* 🌞 Light Mode 字体 = 真黑色 */
+  --text: #000000;
+  --muted: #475569;
+
+  --brand-1: #2563eb;
+  --brand-2: #22d3ee;
+  --accent: #4f46e5;
+  --card-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+  --glass-blur: saturate(150%) blur(12px);
+}
+
+/* ===== 全局背景 & 文本 ===== */
+body {
+  background: radial-gradient(
+      1000px 500px at 10% -10%,
+      rgba(79, 70, 229, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 500px at 90% 10%,
+      rgba(14, 165, 233, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 50% 120%,
+      rgba(99, 102, 241, 0.1),
+      transparent 60%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+/* ===== 玻璃卡片 / 按钮 / 输入框 ===== */
+.glass,
+.card {
+  background: var(--panel);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+
+  /* 全局字体统一 */
+  color: var(--text);
+}
+
+.card {
+  @apply rounded-2xl p-5;
+}
+
+/* ===== 导航栏玻璃 ===== */
+.navbar-glass {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 24, 45, 0.7),
+    rgba(16, 24, 45, 0.35)
+  );
+  backdrop-filter: blur(10px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+html.light .navbar-glass {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== 按钮 ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand-1), var(--accent));
+  color: #fff;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* ===== 输入框 ===== */
+.input {
+  @apply w-full rounded-md px-3 py-2 text-sm;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+html.light .input {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #000;
+}
+
+/* ===== 动画 ===== */
+@keyframes routeFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.route-fade {
+  animation: routeFade 0.35s ease-out both;
+}
